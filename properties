@@ -1,0 +1,18 @@
+# Required variables
+PROJECT=""
+REGION=""
+ZONE=""
+
+CLUSTER_NAME="istio-cluster-gce"
+GCE_NAME="istio-vm"
+NETWORK_NAME="default"
+
+# Required: do not change
+ISTIO_VERSION="0.8.0"
+ISTIO_YAML="istio-demo.yaml"
+ISTIO_AUTH_POLICY="NONE"
+EXP_SRVC_NAMESPACE="vm"
+
+SHARED_DIR="../gke-istio-demo-shared"
+ISTIO_DIR="../gke-istio-demo-shared/istio-$ISTIO_VERSION"
+ISTIO_NAMESPACE="istio-system"
