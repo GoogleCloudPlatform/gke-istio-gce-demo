@@ -1,20 +1,21 @@
 # Istio Service Mesh expansion to GCE
 
-* [Istio in a Kubernetes Engine Cluster](#istio-in-a-kubernetes-engine-cluster)
-  * [Introduction](#introduction)
-  * [Architecture](#architecture)
-        * [Istio Overview](#istio-overview)
-            * [Istio Control Plane](#istio-control-plane)
-            * [Istio Data Plane](#istio-data-plane)
-        * [BookInfo Sample Application](#bookinfo-sample-application)
-        * [Architecture](#architecture-1)
-  * [Prerequisites](#prerequisites)
-        * [Tools](#tools)
-  * [Deployment](#deployment)
-  * [Validation](#validation)
-  * [Tear Down](#tear-down)
-  * [Troubleshooting](#troubleshooting)
-  * [Relevant Material](#relevant-material)
+## Table of Contents
+<!--ts-->
+* [Introduction](#introduction)
+* [Architecture](#architecture)
+   * [Istio Overview](#istio-overview)
+      * [Istio Control Plane](#istio-control-plane)
+      * [Istio Data Plane](#istio-data-plane)
+   * [BookInfo Sample Application](#bookinfo-sample-application)
+   * [Architecture](#architecture-1)
+* [Prerequisites](#prerequisites)
+   * [Tools](#tools)
+* [Deployment](#deployment)
+* [Validation](#validation)
+* [Tear Down](#tear-down)
+* [Relevant Material](#relevant-material)
+<!--te-->
 
 ## Introduction
 
@@ -34,12 +35,12 @@ not be ready for migration to Kubernetes Engine just yet.
 
 ## Architecture
 
-#### Istio Overview
+### Istio Overview
 
 Istio has two main pieces that create the service mesh: the control plane and
 the data plane.
 
-##### Istio Control Plane
+#### Istio Control Plane
 
 The control plane is made up of the following set of components that act
 together to serve as the hub for the infrastructure's service management.
@@ -56,7 +57,7 @@ together to serve as the hub for the infrastructure's service management.
 - **Citadel**: provides strong service-to-service and end-user authentication
   using mutual TLS, with built-in identity and credential management.
 
-##### Istio Data Plane
+#### Istio Data Plane
 
 The data plane is comprised of all the individual service proxies that are
 distributed throughout the infrastructure. Istio uses
@@ -67,7 +68,7 @@ dynamic service discovery, load balancing, TLS termination, HTTP/2 & gRPC
 proxying, circuit breakers, health checks, staged roll-outs with
 percentage-based traffic splits, fault injection, and rich metrics.
 
-#### BookInfo Sample Application
+### BookInfo Sample Application
 
 The sample [BookInfo](https://istio.io/docs/guides/bookinfo.html)
 application displays information about a book, similar to a single catalog entry
@@ -98,7 +99,7 @@ There are 3 versions of the reviews microservice:
 To learn more about Istio, please refer to the
 [project's documentation](https://istio.io/docs/).
 
-#### Architecture
+### Architecture
 
 The pods and services that make up the Istio control plane is the first part of
 the architecture that gets installed into Kubernetes Engine, at the time we
@@ -122,7 +123,7 @@ In the diagram, note
 
 ## Prerequisites
 
-#### Tools
+### Tools
 
 In order to use the code in this demo you will need to have have access to a
 bash shell with the following tools installed:
@@ -161,7 +162,7 @@ Update istio service proxy environment file
 104.196.243.210/productpage
 ```
 
-#### Validation
+## Validation
 
 To validate that everything is working correctly, first open your browser to
 the URL provided at the end of the installation script. Once the ratings
@@ -179,7 +180,7 @@ number of stars you entered. This shows that the rating has made it to the ratin
 service. While the database micro service isn't contained in the GKE cluster, it
 works seemlessly via the Istio data plane.
 
-#### Tear Down
+## Tear Down
 
 To tear down the resources created by this demo, run
 
@@ -190,10 +191,6 @@ To tear down the resources created by this demo, run
 NOTE - Keep an eye on quotas, the tear down script deletes resources it is
 aware of but cannot account for all the resources generated during the setup of
 the infrastructure
-
-## Troubleshooting
-
-
 
 ## Relevant Material
 
