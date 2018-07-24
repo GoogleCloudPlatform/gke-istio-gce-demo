@@ -14,15 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# shellcheck source=../gke-istio-demo-shared/verify-functions.sh
 
 # This script creates a GKE cluster with Istio installed in it using scripts
 # in the SHARED_DIR directory.
 
 set -e
 
+# shellcheck source=./properties.env
+
 # Include the user set variables
 source "${PWD}/properties.env"
+
+# shellcheck source=../gke-istio-shared/verify-functions.sh
 
 # Source utility functions for checking the existence of various resources.
 source "${SHARED_DIR}/verify-functions.sh"
@@ -205,5 +208,5 @@ fi
 "${SHARED_DIR}/integrate-service-into-istio.sh" "${PROJECT}" "${ZONE}" \
   "${GCE_NAME}" "${ISTIO_DIR}" "${SHARED_DIR}"
 
-EXT_IP=`kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{ print $4 }'`
-echo $EXT_IP/productpage
+EXT_IP=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{ print $4 }')
+echo "$EXT_IP/productpage"

@@ -136,7 +136,7 @@ bash shell with the following tools installed:
 ## Deployment
 To deploy this demo, clone the repository and change directory to the
 `gke-istio-gce-demo` directory. Note that this directory is considered the working
-directory and all of the following commands should be run in it. 
+directory and all of the following commands should be run in it.
 Additionally, clone the `gke-istio-shared` repository as it contains necessary
 files for this demo to run correctly.
 
@@ -176,7 +176,7 @@ must be an integer between 1 and 5.
 
 If you refresh the page in your browser, the first rating should return the
 number of stars you entered. This shows that the rating has made it to the ratings
-service. While the database micro service isn't contained in the GKE cluster, it 
+service. While the database micro service isn't contained in the GKE cluster, it
 works seemlessly via the Istio data plane.
 
 #### Tear Down

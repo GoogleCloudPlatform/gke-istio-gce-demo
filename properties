@@ -13,6 +13,6 @@ ISTIO_YAML="istio-demo.yaml"
 ISTIO_AUTH_POLICY="NONE"
 EXP_SRVC_NAMESPACE="vm"
 
-SHARED_DIR="../gke-istio-demo-shared"
-ISTIO_DIR="../gke-istio-demo-shared/istio-$ISTIO_VERSION"
+SHARED_DIR="../gke-istio-shared"
+ISTIO_DIR="../gke-istio-shared/istio-$ISTIO_VERSION"
 ISTIO_NAMESPACE="istio-system"
