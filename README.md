@@ -201,3 +201,6 @@ This demo was created with help from the following links
 - https://istio.io/docs/guides/bookinfo.html
 - https://istio.io/docs/setup/kubernetes/mesh-expansion.html
 - https://istio.io/docs/guides/integrating-vms.html
+
+
+**This is not an officially supported Google product**
