@@ -135,13 +135,14 @@ bash shell with the following tools installed:
 * A bash-compatible shell
 
 ## Deployment
-To deploy this demo, clone the repository and change directory to the
-`gke-istio-gce-demo` directory. Note that this directory is considered the working
-directory and all of the following commands should be run in it.
-Additionally, clone the `gke-istio-shared` repository as it contains necessary
-files for this demo to run correctly.
 
-In the `gke-istio-gce-demo` directory:
+To deploy this demo, clone the repository and the shared repository.
+The shared repository is located here: 
+https://github.com/GoogleCloudPlatform/gke-istio-shared
+
+Once you have both projects cd into this projects directory.
+Note that this directory is considered the working directory and all of the following 
+commands should be run in it.
 
 1. Copy the `properties` file to `properties.env` and set the following
    variables in the `properties.env` file:
