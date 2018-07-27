@@ -128,7 +128,7 @@ fi
 #   ISTIO_AUTH_POLICY - Whether MUTUAL_TLS authentication is turned on
 # Returns:
 #   None
-"${SHARED_DIR}/install-bookinfo.sh" "${ISTIO_DIR}" "default" "${SHARED_DIR}" \
+"${SHARED_DIR}/install-bookinfo-1.0.0.sh" "${ISTIO_DIR}" "default" "${SHARED_DIR}" \
   "${ISTIO_AUTH_POLICY}"
 
 # Validate that the BookInfo application has all of the components installed
@@ -178,7 +178,7 @@ fi
 #   None
 # Returns:
 #   None
-"${SHARED_DIR}/create-istio-mesh-exp-files.sh" "${PROJECT}" "${ZONE}" \
+"${SHARED_DIR}/create-istio-mesh-exp-files-1.0.0.sh" "${PROJECT}" "${ZONE}" \
   "${CLUSTER_NAME}" "${ISTIO_AUTH_POLICY}" "${EXP_SRVC_NAMESPACE}" "${ISTIO_DIR}"
 
 # Configure the expansion instance as a prerequisite to joining the mesh
@@ -192,7 +192,7 @@ fi
 #   ZONE       - Zone housing all of the infrastructure
 # Returns:
 #   None
-"${SHARED_DIR}/setup-istio-mesh-exp-gce.sh" "${PROJECT}" "${GCE_NAME}" \
+"${SHARED_DIR}/setup-istio-mesh-exp-gce-1.0.0.sh" "${PROJECT}" "${GCE_NAME}" \
   "${ISTIO_DIR}" "${SHARED_DIR}" "${ZONE}"
 
 # Integrate GCE service into exisitng Istio infrastructure on GKE
@@ -205,7 +205,7 @@ fi
 #   ISTIO_DIR  - Directory holding all of the Istio configuration files
 # Returns:
 #   None
-"${SHARED_DIR}/integrate-service-into-istio.sh" "${PROJECT}" "${ZONE}" \
+"${SHARED_DIR}/integrate-service-into-istio-1.0.0.sh" "${PROJECT}" "${ZONE}" \
   "${GCE_NAME}" "${ISTIO_DIR}" "${SHARED_DIR}"
 
 EXT_IP=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{ print $4 }')
