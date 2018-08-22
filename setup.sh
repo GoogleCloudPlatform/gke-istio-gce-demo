@@ -25,15 +25,17 @@ set -e
 # Include the user set variables
 source "${PWD}/properties.env"
 
-# shellcheck source=../gke-istio-shared/verify-functions.sh
-
-# Source utility functions for checking the existence of various resources.
-source "${SHARED_DIR}/verify-functions.sh"
-
 # Ensure that the directory containing all of the necessary scripts exists
-if ! directory_exists "${SHARED_DIR}" ; then
-  echo "${SHARED_DIR} does not exist, please check the variable "
-  echo "settings in the properties file."
+if [[ -d "${SHARED_DIR}" ]]; then
+  # shellcheck source=../gke-istio-shared/verify-functions.sh
+
+  # Source utility functions for checking the existence of various resources.
+  source "${SHARED_DIR}/verify-functions.sh"
+else
+  echo "${SHARED_DIR} does not exist, please check the variable settings in \
+the properties file."
+  echo "Also make sure you clone the shared repository located at: \
+https://github.com/GoogleCloudPlatform/gke-istio-shared"
   echo "Exiting..."
   exit 1
 fi
