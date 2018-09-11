@@ -28,14 +28,14 @@ source "${SHARED_DIR}"/verify-functions.sh
 # Delete all created Istio and Kubernetes resources
 if directory_exists "${SHARED_DIR}"; then
   "${SHARED_DIR}/istio-${ISTIO_VERSION}/bin/istioctl" delete -f \
-    "${SHARED_DIR}/istio-${ISTIO_VERSION}/samples/bookinfo/routing/route-rule-all-v1.yaml"
+    "${SHARED_DIR}/istio-${ISTIO_VERSION}/samples/bookinfo/networking/destination-rule-all-mtls.yaml"
   "${SHARED_DIR}/istio-${ISTIO_VERSION}/bin/istioctl" delete -f \
-    "${SHARED_DIR}/istio-${ISTIO_VERSION}/samples/bookinfo/routing/bookinfo-gateway.yaml"
+    "${SHARED_DIR}/istio-${ISTIO_VERSION}/samples/bookinfo/networking/bookinfo-gateway.yaml"
   kubectl delete -f <("${SHARED_DIR}/istio-${ISTIO_VERSION}/bin/istioctl" kube-inject -f \
-    "${SHARED_DIR}/istio-${ISTIO_VERSION}/samples/bookinfo/kube/bookinfo-ratings-v2-mysql-vm.yaml") \
+    "${SHARED_DIR}/istio-${ISTIO_VERSION}/samples/bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml") \
     --ignore-not-found="true"
   kubectl delete -f <("${SHARED_DIR}/istio-${ISTIO_VERSION}/bin/istioctl" kube-inject -f \
-    "${SHARED_DIR}/istio-${ISTIO_VERSION}/samples/bookinfo/kube/bookinfo.yaml") \
+    "${SHARED_DIR}/istio-${ISTIO_VERSION}/samples/bookinfo/platform/kube/bookinfo.yaml") \
     --ignore-not-found="true"
 fi
 
@@ -81,8 +81,8 @@ if directory_exists "${ISTIO_DIR}" ; then
   done
 fi
 
-#### delete local istio binary
-rm -rf "${ISTIO_DIR}"
+# #### delete local istio binary
+# rm -rf "${ISTIO_DIR}"
 
 #### delete gce instance
 if instance_exists "${PROJECT}" "${GCE_NAME}" ; then
