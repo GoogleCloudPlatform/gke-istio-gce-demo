@@ -32,9 +32,9 @@ source "${SHARED_DIR}/verify-functions.sh"
 
 # Ensure that the directory containing all of the necessary scripts exists
 if ! directory_exists "${SHARED_DIR}" ; then
-  echo "${SHARED_DIR} does not exist, please check the variable "
-  echo "settings in the properties file."
-  echo "Exiting..."
+  echo "${SHARED_DIR} which contains shared istio scripts does "
+  echo "not exist, please check the variable settings in the properties "
+  echo "file. Exiting..."
   exit 1
 fi
 

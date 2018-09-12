@@ -81,9 +81,6 @@ if directory_exists "${ISTIO_DIR}" ; then
   done
 fi
 
-# #### delete local istio binary
-# rm -rf "${ISTIO_DIR}"
-
 #### delete gce instance
 if instance_exists "${PROJECT}" "${GCE_NAME}" ; then
   echo ""
@@ -93,7 +90,6 @@ if instance_exists "${PROJECT}" "${GCE_NAME}" ; then
   echo ""
   echo ""
 fi
-
 
 ##### delete kubernetes resources
 if cluster_exists "${PROJECT}" "${CLUSTER_NAME}" ; then
