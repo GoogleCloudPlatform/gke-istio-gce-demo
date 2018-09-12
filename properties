@@ -8,7 +8,7 @@ GCE_NAME="istio-vm"
 NETWORK_NAME="default"
 
 # Required: do not change
-ISTIO_VERSION="0.8.0"
+ISTIO_VERSION="1.0.1"
 ISTIO_YAML="istio-demo.yaml"
 ISTIO_AUTH_POLICY="NONE"
 EXP_SRVC_NAMESPACE="vm"
