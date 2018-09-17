@@ -4,15 +4,15 @@
 <!--ts-->
 * [Introduction](#introduction)
 * [Architecture](#architecture)
-   * [Istio Overview](#istio-overview)
-      * [Istio Control Plane](#istio-control-plane)
-      * [Istio Data Plane](#istio-data-plane)
-   * [BookInfo Sample Application](#bookinfo-sample-application)
-   * [Architecture](#architecture-1)
+  * [Istio Overview](#istio-overview)
+    * [Istio Control Plane](#istio-control-plane)
+    * [Istio Data Plane](#istio-data-plane)
+  * [BookInfo Sample Application](#bookinfo-sample-application)
+  * [Architecture](#architecture-1)
 * [Prerequisites](#prerequisites)
-   * [Run Demo in a Google Cloud Shell](#run-demo-in-a-google-cloud-shell)
-   * [Supported Operating Systems](#supported-operating-systems)
-   * [Tools](#tools)
+  * [Supported Operating Systems](#supported-operating-systems)
+  * [Deploying Demo from a Local Machine](#deploying-demo-from-a-local-machine)
+  * [Deploying Demo from Google Cloud Shell](#deploying-demo-from-google-cloud-shell)
 * [Deployment](#deployment)
 * [Validation](#validation)
 * [Tear Down](#tear-down)
@@ -28,7 +28,7 @@ about how Istio can manage services that reside in the network outside of the
 Kubernetes Engine environment. This demo uses Kubernetes Engine to construct a
 typical Istio infrastructure and then setup a GCE instance running a
 [MySQL](https://www.mysql.com/) microservice that will be integrated into the
-Istio infrastructure. We will use the sample BookInfo application and extend it
+Istio infrastructure. We will use the sample [BookInfo](https://istio.io/docs/examples/bookinfo/) application and extend it
 by using the MySQL microservice to house book reviewer ratings. The demo serves
 as a learning tool and addresses the use case of users who want to leverage
 Istio to manage other services in their
@@ -45,7 +45,7 @@ the data plane.
 #### Istio Control Plane
 
 The control plane is made up of the following set of components that act
-together to serve as the hub for the infrastructure's service management.
+together to serve as the hub for the infrastructure's service management:
 
 - **Mixer**: a platform-independent component responsible for enforcing access
   control and usage policies across the service mesh and collecting telemetry
@@ -61,7 +61,7 @@ together to serve as the hub for the infrastructure's service management.
 
 #### Istio Data Plane
 
-The data plane is comprised of all the individual service proxies that are
+The data plane comprises all the individual service proxies that are
 distributed throughout the infrastructure. Istio uses
 [Envoy](https://www.envoyproxy.io/) with some Istio-specific extensions as its
 service proxy. It mediates all inbound and outbound traffic for all services in
@@ -80,12 +80,12 @@ book details (ISBN, number of pages, and so on), and a few book reviews.
 The BookInfo application is broken into four separate microservices and calls on
 various language environments for its implementation:
 
-- **productpage**. The productpage microservice calls the details and reviews
+- **productpage** - The productpage microservice calls the details and reviews
   microservices to populate the page.
-- **details**. The details microservice contains book information.
-- **reviews**. The reviews microservice contains book reviews. It also calls the
+- **details** - The details microservice contains book information.
+- **reviews** - The reviews microservice contains book reviews. It also calls the
   ratings microservice.
-- **ratings**. The ratings microservice contains book ranking information that
+- **ratings** - The ratings microservice contains book ranking information that
   accompanies a book review.
 
 There are 3 versions of the reviews microservice:
@@ -103,108 +103,115 @@ To learn more about Istio, please refer to the
 
 ### Architecture
 
-The pods and services that make up the Istio control plane is the first part of
-the architecture that gets installed into Kubernetes Engine, at the time we
-install the BookInfo application we simultaneously install an istio service
-proxy alongside each micro service in the application. At this point we have
+The pods and services that make up the Istio control plane are the first components of
+the architecture that get installed into Kubernetes Engine. When we
+install the BookInfo application we simultaneously install an Istio service
+proxy alongside each microservice in the application. At this point we have
 our two tiers that make up the Istio architecture, our Control Plane and our
 Data Plane, and we have microservices to manage.
 
-In the diagram, note
-* all input and output from any BookInfo microservice goes through the service
-  proxy
-* each service proxy communicates with each other and the Control plane to
+In the diagram, note:
+* All input and output from any BookInfo microservice goes through the service proxy.
+* Each service proxy communicates with each other and the Control plane to
   implement the features of the service mesh, circuit breaking, discovery, etc.
-* the Mixer component of the Control Plane is the conduit for the telemetry
-  add-ons to get metrics from the service mesh
-* the Istio ingress component to provide external access to the mesh
-* the environment is setup in the Kubernetes Engine default network
+* The Mixer component of the Control Plane is the conduit for the telemetry
+  add-ons to get metrics from the service mesh.
+* The Istio ingress component provides external access to the mesh.
+* The environment is setup in the Kubernetes Engine default network.
 
 ![](./images/istio-gke-gce.png)
 
-
 ## Prerequisites
 
-A Google Cloud account and project is required for this.  Access to an existing Google Cloud
-project with the Kubernetes Engine service enabled If you do not have a Google Cloud account
-please signup for a free trial [here](https://cloud.google.com).
+A Google Cloud account and a project with billing enabled are required for this demo to function. If you do not have a Google Cloud account please sign up for a free trial [here](https://cloud.google.com).
 
-### Run Demo in a Google Cloud Shell
+### Supported Operating Systems
 
-Click the button below to run the demo in a [Google Cloud Shell](https://cloud.google.com/shell/docs/).
+This demo can be run from MacOS, Linux, or, alternatively, directly from [Google Cloud Shell](https://cloud.google.com/shell/docs/). The latter option is the simplest as it only requires browser access to GCP and no additional software need be installed. Instructions for both alternatives can be found below.
+
+### Deploying Demo from a Local Machine
+
+_NOTE: If the demo is being deployed via Cloud Shell, this section can be skipped._
+
+For deployments from a local machine, you will need to have access to a [bash](https://www.gnu.org/software/bash/) shell with the following tools installed:
+
+* [Google Cloud SDK (v204.0.0 or later)](https://cloud.google.com/sdk/downloads)
+* [kubectl (v1.10.0 or later)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [git](https://git-scm.com/)
+
+Use `git` to clone this project to your local machine:
+
+```shell
+git clone --recursive https://github.com/GoogleCloudPlatform/gke-istio-gce-demo
+```
+
+Note that the `--recursive` argument is required to download dependencies provided via a git submodule.
+
+When downloading is complete, change your current working directory to the new project:
+
+```shell
+cd gke-istio-gce-demo
+```
+
+Continue with the instructions below running all commands from this directory.
+
+### Deploying Demo from Google Cloud Shell
+
+_NOTE: This section can be skipped if the cloud deployment is being performed from a local computer and the instructions from the previous section were followed._
+
+Click the button below to open the demo in your [Google Cloud Shell](https://cloud.google.com/shell/docs/).
 
 [![Open in Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https%3A%2F%2Fgithub.com%2FGoogleCloudPlatform%2Fgke-istio-gce-demo&page=editor&tutorial=README.md)
 
-All the tools for the demo are installed. When using Cloud Shell execute the following
-command in order to setup gcloud cli.
+All the tools necessary for the demo are already installed in Cloud Shell. To prepare [gcloud](https://cloud.google.com/sdk/gcloud/) for use in Cloud Shell, execute the following command in the terminal at the bottom of the browser window you just opened:
 
 ```console
 gcloud init
 ```
 
-### Supported Operating Systems
-
-This project will run on macOS, Linux, or in a [Google Cloud Shell](https://cloud.google.com/shell/docs/).
-
-### Tools
-
-When not using Cloud Shell, the following tools are required.
-
-In order to use the code in this demo you will need to have have access to a
-bash shell with the following tools installed:
-
-* A [GCP project](https://cloud.google.com/) with billing enabled
-* [Google Cloud SDK (v204.0.0 or later)](https://cloud.google.com/sdk/downloads)\
-* [kubectl (v1.10.0 or later)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* git
-* A bash-compatible shell
+Respond to the prompts and continue with the following deployment instructions.
 
 ## Deployment
 
-To deploy this demo, clone the repository and the shared repository.
-The shared repository is located here:
-https://github.com/GoogleCloudPlatform/gke-istio-shared
+_NOTE: The following instructions are applicable for both deployments performed from a local machine and deployments from Cloud Shell._
 
-Once you have both projects cd into this projects directory.
-Note that this directory is considered the working directory and all of the following
-commands should be run in it.
+Copy the `properties` file to `properties.env` and set the following variables in the `properties.env` file:
+ * `PROJECT` - the name of the project you want to use
+ * `REGION` - the region in which to locate all the infrastructure
+ * `ZONE` - the zone in which to locate all the infrastructure
 
-1. Copy the `properties` file to `properties.env` and set the following
-   variables in the `properties.env` file:
-       * PROJECT - the name of the project you want to use
-       * REGION - the region in which to locate for all the infrastructure
-       * ZONE - the zone in which to locate all the infrastructure
-1. Run the following command
+Run the following command
 
-```console
+```shell
 ./setup.sh
 ```
 
-The script should deploy all of the necessary infrastructure and install Istio.
+  Press `RETURN` for each of the following prompts, if they are displayed midway through the script:
 
-The script will end with a line like this, though the IP address will be different:
+```console
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+```
+
+The script should deploy all of the necessary infrastructure and install Istio. The script will end with a line like this, though the IP address will likely be different:
 ```
 Update istio service proxy environment file
 104.196.243.210/productpage
 ```
 
+You can open this URL in your browser and see the simple web application provided by the demo.
+
 ## Validation
 
-To validate that everything is working correctly, first open your browser to
-the URL provided at the end of the installation script. Once the ratings
-service is running correctly, run
+To validate that everything is working correctly, first open your browser to the URL provided at the end of the setup script. Once the ratings service is running correctly, run:
 
-```console
+```shell
 ./validate.sh <STARS>
 ```
 
-and substitute <STARS> for the number of stars to return. The value of <STARS>
-must be an integer between 1 and 5.
+and substitute `<STARS>` for the number of stars to return. The value of `<STARS>` must be an integer between 1 and 5.
 
-If you refresh the page in your browser, the first rating should return the
-number of stars you entered. This shows that the rating has made it to the ratings
-service. While the database micro service isn't contained in the GKE cluster, it
-works seemlessly via the Istio data plane.
+If you refresh the page in your browser, the first rating should display the number of stars you entered. This shows that the rating has made it from the database to the ratings service. While the database microservice isn't contained within the GKE cluster, it works seamlessly via the Istio data plane.
 
 ## Tear Down
 
@@ -214,9 +221,7 @@ To tear down the resources created by this demo, run
 ./teardown.sh
 ```
 
-NOTE - Keep an eye on quotas, the tear down script deletes resources it is
-aware of but cannot account for all the resources generated during the setup of
-the infrastructure
+NOTE: Keep an eye on quotas. The teardown script deletes resources of which it is aware but it is possible some resources were created in setup and not torn down.
 
 ## Relevant Material
 

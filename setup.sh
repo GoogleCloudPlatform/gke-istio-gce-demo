@@ -32,7 +32,7 @@ source "${SHARED_DIR}/verify-functions.sh"
 
 # Ensure that the directory containing all of the necessary scripts exists
 if ! directory_exists "${SHARED_DIR}" ; then
-  echo "${SHARED_DIR} which contains shared istio scripts does "
+  echo "${SHARED_DIR} which contains shared Istio scripts does "
   echo "not exist, please check the variable settings in the properties "
   echo "file. Exiting..."
   exit 1
@@ -96,7 +96,7 @@ fi
 # Globals:
 #   None
 # Arguments:
-#   PROJECT            - Project to contain istio cluster
+#   PROJECT            - Project to contain Istio cluster
 #   CLUSTER_NAME       - Name to use for GKE cluster
 #   ZONE               - Zone to locate created cluster
 #   NETWORK_NAME       - Name of network to use for cluster
@@ -141,7 +141,7 @@ fi
 #   None
 "${SHARED_DIR}/verify-bookinfo-setup.sh" "${ISTIO_NAMESPACE}" "${SHARED_DIR}"
 
-# Install istio service mesh expansion into cluster
+# Install Istio service mesh expansion into cluster
 # Globals:
 #   None
 # Arguments:
