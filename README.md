@@ -11,8 +11,8 @@
   * [Architecture](#architecture-1)
 * [Prerequisites](#prerequisites)
   * [Supported Operating Systems](#supported-operating-systems)
-  * [Deploying Demo from a Local Machine](#deploying-demo-from-a-local-machine)
   * [Deploying Demo from Google Cloud Shell](#deploying-demo-from-google-cloud-shell)
+  * [Deploying Demo without Cloud Shell](#deploying-demo-without-cloud-shell)
 * [Deployment](#deployment)
 * [Validation](#validation)
 * [Tear Down](#tear-down)
@@ -129,11 +129,29 @@ A Google Cloud account and a project with billing enabled are required for this 
 
 This demo can be run from MacOS, Linux, or, alternatively, directly from [Google Cloud Shell](https://cloud.google.com/shell/docs/). The latter option is the simplest as it only requires browser access to GCP and no additional software need be installed. Instructions for both alternatives can be found below.
 
-### Deploying Demo from a Local Machine
+### Deploying Demo from Google Cloud Shell
 
-_NOTE: If the demo is being deployed via Cloud Shell, this section can be skipped._
+_NOTE: This section can be skipped if the cloud deployment is being performed without Cloud Shell, for instance from a local machine or from a server outside GCP._
 
-For deployments from a local machine, you will need to have access to a [bash](https://www.gnu.org/software/bash/) shell with the following tools installed:
+[Google Cloud Shell](https://cloud.google.com/shell/docs/) is a browser-based terminal that Google provides to interact with your GCP resources. It is backed by a free Compute Engine instance that comes with many useful tools already installed, including everything required to run this demo.
+
+Click the button below to open the demo in your Cloud Shell:
+
+[![Open in Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https%3A%2F%2Fgithub.com%2FGoogleCloudPlatform%2Fgke-istio-gce-demo&page=editor&tutorial=README.md)
+
+To prepare [gcloud](https://cloud.google.com/sdk/gcloud/) for use in Cloud Shell, execute the following command in the terminal at the bottom of the browser window you just opened:
+
+```console
+gcloud init
+```
+
+Respond to the prompts and continue with the following deployment instructions. The prompts will include the account you want to run as, the current project, and, optionally, the default region and zone. These configure Cloud Shell itself-the actual project, region, and zone, used by the demo will be configured separately below.
+
+### Deploying Demo without Cloud Shell
+
+_NOTE: If the demo is being deployed via Cloud Shell, as described above, this section can be skipped._
+
+For deployments without using Cloud Shell, you will need to have access to a computer providing a  [bash](https://www.gnu.org/software/bash/) shell with the following tools installed:
 
 * [Google Cloud SDK (v204.0.0 or later)](https://cloud.google.com/sdk/downloads)
 * [kubectl (v1.10.0 or later)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
@@ -153,34 +171,18 @@ When downloading is complete, change your current working directory to the new p
 cd gke-istio-gce-demo
 ```
 
-Continue with the instructions below running all commands from this directory.
-
-### Deploying Demo from Google Cloud Shell
-
-_NOTE: This section can be skipped if the cloud deployment is being performed from a local computer and the instructions from the previous section were followed._
-
-Click the button below to open the demo in your [Google Cloud Shell](https://cloud.google.com/shell/docs/).
-
-[![Open in Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https%3A%2F%2Fgithub.com%2FGoogleCloudPlatform%2Fgke-istio-gce-demo&page=editor&tutorial=README.md)
-
-All the tools necessary for the demo are already installed in Cloud Shell. To prepare [gcloud](https://cloud.google.com/sdk/gcloud/) for use in Cloud Shell, execute the following command in the terminal at the bottom of the browser window you just opened:
-
-```console
-gcloud init
-```
-
-Respond to the prompts and continue with the following deployment instructions.
+Continue with the instructions below, running all commands from this directory.
 
 ## Deployment
 
-_NOTE: The following instructions are applicable for both deployments performed from a local machine and deployments from Cloud Shell._
+_NOTE: The following instructions are applicable for deployments performed both with and without Cloud Shell._
 
 Copy the `properties` file to `properties.env` and set the following variables in the `properties.env` file:
  * `PROJECT` - the name of the project you want to use
  * `REGION` - the region in which to locate all the infrastructure
  * `ZONE` - the zone in which to locate all the infrastructure
 
-Run the following command
+Run the following command:
 
 ```shell
 ./setup.sh
