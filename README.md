@@ -103,12 +103,7 @@ To learn more about Istio, please refer to the
 
 ### Architecture
 
-The pods and services that make up the Istio control plane are the first components of
-the architecture that get installed into Kubernetes Engine. When we
-install the BookInfo application we simultaneously install an Istio service
-proxy alongside each microservice in the application. At this point we have
-our two tiers that make up the Istio architecture, our Control Plane and our
-Data Plane, and we have microservices to manage.
+The pods and services that make up the Istio control plane are the first components of the architecture that will be installed into Kubernetes Engine. An Istio service proxy is installed along with each microservice during the installation of the BookInfo application. At this point, in addition to the application microservices there are two tiers that make up the Istio architecture: the Control Plane and the Data Plane. 
 
 In the diagram, note:
 * All input and output from any BookInfo microservice goes through the service proxy.
@@ -127,7 +122,7 @@ A Google Cloud account and a project with billing enabled are required for this 
 
 ### Supported Operating Systems
 
-This demo can be run from MacOS, Linux, or, alternatively, directly from [Google Cloud Shell](https://cloud.google.com/shell/docs/). The latter option is the simplest as it only requires browser access to GCP and no additional software need be installed. Instructions for both alternatives can be found below.
+This demo can be run from MacOS, Linux, or, alternatively, directly from [Google Cloud Shell](https://cloud.google.com/shell/docs/). The latter option is the simplest as it only requires browser access to GCP and no additional software is required. Instructions for both alternatives can be found below.
 
 ### Deploying Demo from Google Cloud Shell
 
