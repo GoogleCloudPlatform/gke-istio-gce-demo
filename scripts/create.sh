@@ -107,6 +107,9 @@ if ! cluster_exists "${PROJECT}" "${CLUSTER_NAME}"; then
   "${ISTIO_SHARED_DIR}/create-istio-cluster.sh" "${PROJECT}" "${CLUSTER_NAME}" "${ZONE}" "${NETWORK_NAME}"
 fi
 
+# Set context to "default" to ensure following kubectl commands work
+kubectl config set-context $(kubectl config current-context) --namespace=default
+
 # Install Istio control plane into the cluster
 # Globals:
 #   None
