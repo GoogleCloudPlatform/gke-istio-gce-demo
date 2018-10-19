@@ -1,7 +1,7 @@
-# Required variables
-PROJECT=""
-REGION=""
-ZONE=""
+# Required variables: please fill in
+PROJECT="<YOUR_PROJECT>"
+ZONE="<YOUR_ZONE>"
+REGION="<YOUR_REGION>"
 
 CLUSTER_NAME="istio-cluster-gce"
 GCE_NAME="istio-vm"
