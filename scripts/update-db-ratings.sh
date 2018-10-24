@@ -17,7 +17,7 @@
 # This script updates the values in the database located on the specified
 # instance
 
-if [[ $4 =~ ^[1-5]$ ]]; then
+if [[ $4 =~ ^[0-5]$ ]]; then
   COMMAND="mysql -u root --password=password test -e \"update ratings set rating=${4} where reviewid=1\""
   gcloud compute ssh "${3}" --project "${1}" --zone "${2}" --command "${COMMAND}"
   exit 0

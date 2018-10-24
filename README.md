@@ -156,9 +156,13 @@ Continue with the instructions below, running all commands from this directory.
 
 _NOTE: The following instructions are applicable for deployments performed both with and without Cloud Shell._
 
+1. Copy the properties file to properties.env and set the following variables in the properties.env file:
+
 * `YOUR_PROJECT` - the name of the project you want to use
 * `YOUR_REGION` - the region in which to locate all the infrastructure
 * `YOUR_ZONE` - the zone in which to locate all the infrastructure
+
+1. Run the following command
 
 ```console
 make create

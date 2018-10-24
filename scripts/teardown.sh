@@ -136,6 +136,10 @@ if firewall_exists "${PROJECT}" "allow-mysql"; then
   gcloud compute --project "${PROJECT}" firewall-rules delete allow-mysql --quiet
 fi
 
+if firewall_exists "${PROJECT}" "allow-ssh-istio-vm"; then
+  gcloud compute --project "${PROJECT}" firewall-rules delete allow-ssh-istio-vm --quiet
+fi
+
 # Delete the network created for the cluster
 if network_exists "${PROJECT}" "${NETWORK_NAME}" ; then
   gcloud compute --project "${PROJECT}" networks delete "${NETWORK_NAME}" --quiet
