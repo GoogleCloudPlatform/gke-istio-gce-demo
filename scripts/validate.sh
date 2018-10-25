@@ -14,12 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Add the properties file to allow the make tests to pass
-# shellcheck source=properties
-
 set -e
-
-STARS="${1}"
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
@@ -30,27 +25,10 @@ source "${ROOT}/properties.env"
 ISTIO_SHARED_DIR="${ROOT}/gke-istio-shared"
 
 # Source utility functions for checking the existence of various resources.
-# shellcheck source=../gke-istio-shared/verify-functions.sh
+# shellcheck source=gke-istio-shared/verify-functions.sh
 source "${ISTIO_SHARED_DIR}/verify-functions.sh"
 
 dependency_installed "kubectl"
 
-# Get the IP address and port of the cluster's gateway to run tests against
-INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway \
-  -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway \
-  -o jsonpath='{.spec.ports[?(@.name=="http")].port}')
-
-# Get and store the currently served webpage
-FIVE_STAR="$(curl -s http://"${INGRESS_HOST}:${INGRESS_PORT}"/productpage)"
-
-# Update the MySQL database rating with a one star review to generate a diff
-# proving the MySQL on GCE database is being used by the application
-source "$ROOT/scripts/update-db-ratings.sh" "${PROJECT}" "${ZONE}" "${GCE_NAME}" "${STARS}"
-
-# Get the updated webpage with the updated ratings
-ONE_STAR="$(curl -s http://"${INGRESS_HOST}:${INGRESS_PORT}"/productpage)"
-
-# Check to make sure that changing the rating in the DB generated a diff in the
-# webpage
-diff --suppress-common-lines <(echo "${ONE_STAR}") <(echo "${FIVE_STAR}")
+# shellcheck source=gke-istio-shared/verify-db-ratings.sh
+source "${ISTIO_SHARED_DIR}/verify-db-ratings.sh"

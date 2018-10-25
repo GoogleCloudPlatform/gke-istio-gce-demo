@@ -29,7 +29,7 @@ ISTIO_SHARED_DIR="${ROOT}/gke-istio-shared"
 ISTIO_DIR="${ROOT}/istio-${ISTIO_VERSION}"
 
 # Source utility functions for checking the existence of various resources.
-# shellcheck source=../gke-istio-shared/verify-functions.sh
+# shellcheck source=gke-istio-shared/verify-functions.sh
 source "${ISTIO_SHARED_DIR}/verify-functions.sh"
 
 # Ensure that the directory containing all of the necessary scripts exists
@@ -108,7 +108,7 @@ if ! cluster_exists "${PROJECT}" "${CLUSTER_NAME}"; then
 fi
 
 # Set context to "default" to ensure following kubectl commands work
-kubectl config set-context $(kubectl config current-context) --namespace=default
+kubectl config set-context "$(kubectl config current-context)" --namespace=default
 
 # Install Istio control plane into the cluster
 # Globals:
@@ -162,13 +162,13 @@ kubectl config set-context $(kubectl config current-context) --namespace=default
 # Globals:
 #   None
 # Arguments:
-#   GCE_NAME     - Name of the GCE VM
+#   GCE_VM     - Name of the GCE VM
 #   PROJECT      - Project housing all of the infrastructure
 #   NETWORK_NAME - Name of network to use for cluster
 #   ZONE         - Zone to locate created cluster
 # Returns:
 #   None
-"${ISTIO_SHARED_DIR}/create-istio-mesh-exp-gce.sh" "${GCE_NAME}" "${PROJECT}" \
+"${ISTIO_SHARED_DIR}/create-istio-mesh-exp-gce.sh" "${GCE_VM}" "${PROJECT}" \
   "${NETWORK_NAME}" "${ZONE}"
 
 # Create configuration files for Istio mesh expansion
@@ -191,13 +191,13 @@ kubectl config set-context $(kubectl config current-context) --namespace=default
 #   None
 # Arguments:
 #   PROJECT    - Project housing all of the infrastructure
-#   GCE_NAME   - Name of the GCE VM
+#   GCE_VM   - Name of the GCE VM
 #   ISTIO_DIR  - Directory holding all of the Istio configuration files
 #   SHARED_DIR - Directory containing scripts shared by other demos
 #   ZONE       - Zone housing all of the infrastructure
 # Returns:
 #   None
-"${ISTIO_SHARED_DIR}/setup-istio-mesh-exp-gce-1.0.x.sh" "${PROJECT}" "${GCE_NAME}" \
+"${ISTIO_SHARED_DIR}/setup-istio-mesh-exp-gce-1.0.x.sh" "${PROJECT}" "${GCE_VM}" \
   "${ISTIO_DIR}" "${ISTIO_SHARED_DIR}" "${ZONE}"
 
 # Integrate GCE service into existing Istio infrastructure on GKE
@@ -206,12 +206,12 @@ kubectl config set-context $(kubectl config current-context) --namespace=default
 # Arguments:
 #   PROJECT    - Project housing all of the infrastructure
 #   ZONE       - Zone housing all of the infrastructure
-#   GCE_NAME   - Name of the GCE VM
+#   GCE_VM   - Name of the GCE VM
 #   ISTIO_DIR  - Directory holding all of the Istio configuration files
 # Returns:
 #   None
 "${ISTIO_SHARED_DIR}/integrate-service-into-istio-1.0.x.sh" "${PROJECT}" "${ZONE}" \
-  "${GCE_NAME}" "${ISTIO_DIR}" "${ISTIO_SHARED_DIR}"
+  "${GCE_VM}" "${ISTIO_DIR}" "${ISTIO_SHARED_DIR}"
 
 EXT_IP=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{ print $4 }')
 echo "$EXT_IP/productpage"
