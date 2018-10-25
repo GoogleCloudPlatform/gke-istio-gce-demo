@@ -21,10 +21,19 @@ set -e
 
 STARS="${1}"
 
-source properties.env
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-command -v "kubectl" >/dev/null 2>&1 \
-  || (echo "Dependency kubectl is not installed. Aborting..."; exit 1)
+# Include the user set variables
+# shellcheck source=properties.env
+source "${ROOT}/properties.env"
+
+ISTIO_SHARED_DIR="${ROOT}/gke-istio-shared"
+
+# Source utility functions for checking the existence of various resources.
+# shellcheck source=../gke-istio-shared/verify-functions.sh
+source "${ISTIO_SHARED_DIR}/verify-functions.sh"
+
+dependency_installed "kubectl"
 
 # Get the IP address and port of the cluster's gateway to run tests against
 INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway \
@@ -37,7 +46,7 @@ FIVE_STAR="$(curl -s http://"${INGRESS_HOST}:${INGRESS_PORT}"/productpage)"
 
 # Update the MySQL database rating with a one star review to generate a diff
 # proving the MySQL on GCE database is being used by the application
-./update-db-ratings.sh "${PROJECT}" "${ZONE}" "${GCE_NAME}" "${STARS}"
+source "$ROOT/scripts/update-db-ratings.sh" "${PROJECT}" "${ZONE}" "${GCE_NAME}" "${STARS}"
 
 # Get the updated webpage with the updated ratings
 ONE_STAR="$(curl -s http://"${INGRESS_HOST}:${INGRESS_PORT}"/productpage)"
@@ -45,4 +54,3 @@ ONE_STAR="$(curl -s http://"${INGRESS_HOST}:${INGRESS_PORT}"/productpage)"
 # Check to make sure that changing the rating in the DB generated a diff in the
 # webpage
 diff --suppress-common-lines <(echo "${ONE_STAR}") <(echo "${FIVE_STAR}")
-

@@ -8,7 +8,7 @@
     * [Istio Control Plane](#istio-control-plane)
     * [Istio Data Plane](#istio-data-plane)
   * [BookInfo Sample Application](#bookinfo-sample-application)
-  * [Architecture](#architecture-1)
+  * [Putting it All Together](#putting-it-all-together)
 * [Prerequisites](#prerequisites)
   * [Supported Operating Systems](#supported-operating-systems)
   * [Deploying Demo from Google Cloud Shell](#deploying-demo-from-google-cloud-shell)
@@ -21,19 +21,11 @@
 
 ## Introduction
 
-In this demo, we leverage [Google Kubernetes
-Engine](https://cloud.google.com/kubernetes-engine/) (Kubernetes Engine) and
-[Google Compute Engine](https://cloud.google.com/compute/) (GCE) to learn more
-about how Istio can manage services that reside in the network outside of the
-Kubernetes Engine environment. This demo uses Kubernetes Engine to construct a
-typical Istio infrastructure and then setup a GCE instance running a
-[MySQL](https://www.mysql.com/) microservice that will be integrated into the
-Istio infrastructure. We will use the sample [BookInfo](https://istio.io/docs/examples/bookinfo/) application and extend it
-by using the MySQL microservice to house book reviewer ratings. The demo serves
-as a learning tool and addresses the use case of users who want to leverage
-Istio to manage other services in their
-[Google Cloud Platform](https://cloud.google.com/) (GCP) environment that may
-not be ready for migration to Kubernetes Engine just yet.
+[Istio](http://istio.io/) is part of a new category of products known as "service mesh" software designed to manage the complexity of service resilience in a microservice infrastructure. It defines itself as a service management framework built to keep business logic separate from the logic to keep your services up and running. In other words, it provides a layer on top of the network that will automatically route traffic to the appropriate services, handle [circuit breaker](https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern) logic, enforce access and load balancing policies, and generate telemetry data to gain insight into the network and allow for quick diagnosis of issues.
+
+For more information on Istio, please refer to the [Istio documentation](https://istio.io/docs/). Some familiarity with Istio is assumed.
+
+In this demo, we leverage [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/) (Kubernetes Engine) and [Google Compute Engine](https://cloud.google.com/compute/) (GCE) to learn more about how Istio can manage services that reside in the network outside of the Kubernetes Engine environment. This demo uses Kubernetes Engine to construct a typical Istio infrastructure and then setup a GCE instance running a [MySQL](https://www.mysql.com/) microservice that will be integrated into the Istio infrastructure. We will use the sample [BookInfo](https://istio.io/docs/examples/bookinfo/) application and extend it by using the MySQL microservice to house book reviewer ratings. The demo serves as a learning tool and addresses the use case of users who want to leverage Istio to manage other services in their [Google Cloud Platform](https://cloud.google.com/) (GCP) environment that may not be ready for migration to Kubernetes Engine just yet.
 
 ## Architecture
 
@@ -47,17 +39,11 @@ the data plane.
 The control plane is made up of the following set of components that act
 together to serve as the hub for the infrastructure's service management:
 
-- **Mixer**: a platform-independent component responsible for enforcing access
-  control and usage policies across the service mesh and collecting telemetry
-  data from the Envoy proxy and other services
+* _[Mixer](https://istio.io/docs/concepts/what-is-istio/#mixer)_: a platform-independent component responsible for enforcing access control and usage policies across the service mesh and collecting telemetry data from the [Envoy](https://istio.io/docs/concepts/what-is-istio/#envoy) proxy and other services
 
-- **Pilot**: provides service discovery for the Envoy sidecars, traffic
-  management capabilities for intelligent routing, (A/B tests, canary
-  deployments, etc.), and resiliency (timeouts, retries, circuit breakers,
-  etc.)
+* _[Pilot](https://istio.io/docs/concepts/what-is-istio/#pilot)_: provides service discovery for the Envoy sidecars, traffic management capabilities for intelligent routing, (A/B tests, canary deployments, etc.), and resiliency (timeouts, retries, circuit breakers, etc.)
 
-- **Citadel**: provides strong service-to-service and end-user authentication
-  using mutual TLS, with built-in identity and credential management.
+* _[Citadel](https://istio.io/docs/concepts/what-is-istio/#citadel)_: provides strong service-to-service and end-user authentication using mutual TLS, with built-in identity and credential management.
 
 #### Istio Data Plane
 
@@ -101,16 +87,14 @@ There are 3 versions of the reviews microservice:
 To learn more about Istio, please refer to the
 [project's documentation](https://istio.io/docs/).
 
-### Architecture
+### Putting it All Together
 
-The pods and services that make up the Istio control plane are the first components of the architecture that will be installed into Kubernetes Engine. An Istio service proxy is installed along with each microservice during the installation of the BookInfo application. At this point, in addition to the application microservices there are two tiers that make up the Istio architecture: the Control Plane and the Data Plane. 
+The pods and services that make up the Istio control plane are the first components of the architecture that will be installed into Kubernetes Engine. An Istio service proxy is installed along with each microservice during the installation of the BookInfo application, as are our telemetry add-ons. At this point, in addition to the application microservices there are two tiers that make up the Istio architecture: the Control Plane and the Data Plane.
 
 In the diagram, note:
 * All input and output from any BookInfo microservice goes through the service proxy.
-* Each service proxy communicates with each other and the Control plane to
-  implement the features of the service mesh, circuit breaking, discovery, etc.
-* The Mixer component of the Control Plane is the conduit for the telemetry
-  add-ons to get metrics from the service mesh.
+* Each service proxy communicates with each other and the Control Plane to implement the features of the service mesh, circuit breaking, discovery, etc.
+* The Mixer component of the Control Plane is the conduit for the telemetry add-ons to get metrics from the service mesh.
 * The Istio ingress component provides external access to the mesh.
 * The environment is setup in the Kubernetes Engine default network.
 
@@ -172,22 +156,16 @@ Continue with the instructions below, running all commands from this directory.
 
 _NOTE: The following instructions are applicable for deployments performed both with and without Cloud Shell._
 
-Copy the `properties` file to `properties.env` and set the following variables in the `properties.env` file:
- * `PROJECT` - the name of the project you want to use
- * `REGION` - the region in which to locate all the infrastructure
- * `ZONE` - the zone in which to locate all the infrastructure
+1. Copy the properties file to properties.env and set the following variables in the properties.env file:
 
-Run the following command:
+* `YOUR_PROJECT` - the name of the project you want to use
+* `YOUR_REGION` - the region in which to locate all the infrastructure
+* `YOUR_ZONE` - the zone in which to locate all the infrastructure
 
-```shell
-./setup.sh
-```
-
-  Press `RETURN` for each of the following prompts, if they are displayed midway through the script:
+1. Run the following command
 
 ```console
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
+make create
 ```
 
 The script should deploy all of the necessary infrastructure and install Istio. The script will end with a line like this, though the IP address will likely be different:
@@ -203,7 +181,7 @@ You can open this URL in your browser and see the simple web application provide
 To validate that everything is working correctly, first open your browser to the URL provided at the end of the setup script. Once the ratings service is running correctly, run:
 
 ```shell
-./validate.sh <STARS>
+./scripts/validate.sh <STARS>
 ```
 
 and substitute `<STARS>` for the number of stars to return. The value of `<STARS>` must be an integer between 1 and 5.
@@ -212,10 +190,10 @@ If you refresh the page in your browser, the first rating should display the num
 
 ## Tear Down
 
-To tear down the resources created by this demo, run
+To tear down the resources created by this demonstration, run:
 
 ```console
-./teardown.sh
+make teardown
 ```
 
 NOTE: Keep an eye on quotas. The teardown script deletes resources of which it is aware but it is possible some resources were created in setup and not torn down.

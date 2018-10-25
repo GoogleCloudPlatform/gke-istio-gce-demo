@@ -35,3 +35,4 @@ crash.log
 # example.tfvars
 
 properties.env
+istio-1.0.1
