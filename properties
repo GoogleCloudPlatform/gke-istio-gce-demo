@@ -4,7 +4,7 @@ ZONE="<YOUR_ZONE>"
 REGION="<YOUR_REGION>"
 
 CLUSTER_NAME="istio-cluster-gce"
-GCE_NAME="istio-vm"
+GCE_VM="istio-vm"
 NETWORK_NAME="istio-gce-demo"
 
 # Required: do not change

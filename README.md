@@ -178,15 +178,14 @@ You can open this URL in your browser and see the simple web application provide
 
 ## Validation
 
-To validate that everything is working correctly, first open your browser to the URL provided at the end of the setup script. Once the ratings service is running correctly, run:
+To validate that everything is working correctly, first open your browser to the URL provided at the end of the setup script, make note of stars for first book review. Once the ratings service is running correctly, run:
 
-```shell
-./scripts/validate.sh <STARS>
+```console
+make validate
 ```
 
-and substitute `<STARS>` for the number of stars to return. The value of `<STARS>` must be an integer between 1 and 5.
 
-If you refresh the page in your browser, the first rating should display the number of stars you entered. This shows that the rating has made it from the database to the ratings service. While the database microservice isn't contained within the GKE cluster, it works seamlessly via the Istio data plane.
+If you refresh the page in your browser, the first rating should display a different number for rating. This shows that the rating has made it from the database to the ratings service. While the database microservice isn't contained within the GKE cluster, it works seamlessly via the Istio data plane.
 
 ## Tear Down
 

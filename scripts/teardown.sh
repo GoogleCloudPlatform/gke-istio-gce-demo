@@ -85,11 +85,11 @@ if directory_exists "${ISTIO_DIR}" ; then
 fi
 
 #### delete gce instance
-if instance_exists "${PROJECT}" "${GCE_NAME}" ; then
+if instance_exists "${PROJECT}" "${GCE_VM}" ; then
   echo ""
   echo " deleting istio gce instance"
   echo ""
-  gcloud compute instances delete "${GCE_NAME}" --project "${PROJECT}" --zone "${ZONE}" --quiet
+  gcloud compute instances delete "${GCE_VM}" --project "${PROJECT}" --zone "${ZONE}" --quiet
   echo ""
   echo ""
 fi
