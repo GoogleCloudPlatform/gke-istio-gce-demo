@@ -102,6 +102,21 @@ In the diagram, note:
 
 ## Prerequisites
 
+### Tools
+1. [Google Cloud SDK version >= 204.0.0](https://cloud.google.com/sdk/docs/downloads-versioned-archives)
+2. [kubectl matching the latest GKE version](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+3. [git](https://git-scm.com/)
+
+#### Install Cloud SDK
+The Google Cloud SDK is used to interact with your GCP resources.
+[Installation instructions](https://cloud.google.com/sdk/downloads) for multiple platforms are available online.
+
+#### Install kubectl CLI
+
+The kubectl CLI is used to interteract with both Kubernetes Engine and kubernetes in general.
+[Installation instructions](https://cloud.google.com/kubernetes-engine/docs/quickstart)
+for multiple platforms are available online.
+
 A Google Cloud account and a project with billing enabled are required for this demo to function. If you do not have a Google Cloud account please sign up for a free trial [here](https://cloud.google.com).
 
 ### Supported Operating Systems
@@ -131,10 +146,6 @@ Respond to the prompts and continue with the following deployment instructions. 
 _NOTE: If the demo is being deployed via Cloud Shell, as described above, this section can be skipped._
 
 For deployments without using Cloud Shell, you will need to have access to a computer providing a  [bash](https://www.gnu.org/software/bash/) shell with the following tools installed:
-
-* [Google Cloud SDK (v204.0.0 or later)](https://cloud.google.com/sdk/downloads)
-* [kubectl (v1.10.0 or later)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [git](https://git-scm.com/)
 
 Use `git` to clone this project to your local machine:
 
