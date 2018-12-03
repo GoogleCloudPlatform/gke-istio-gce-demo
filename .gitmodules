@@ -1,3 +1,4 @@
 [submodule "gke-istio-shared"]
 	path = gke-istio-shared
 	url = https://github.com/GoogleCloudPlatform/gke-istio-shared.git
+	branch = maxwelllincoln-istio-1.0.4
