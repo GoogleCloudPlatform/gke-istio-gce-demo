@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# shellcheck source=verify-functions.sh
+# shellcheck source=../gke-istio-shared/verify-functions.sh
 
 ISTIO_DIR="${1}"
 NAMESPACE="${2}"
