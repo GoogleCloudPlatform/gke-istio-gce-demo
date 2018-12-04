@@ -38,8 +38,12 @@ if directory_exists "${ISTIO_DIR}"; then
     --ignore-not-found="true"
 fi
 
-kubectl delete -f "${ISTIO_DIR}/install/kubernetes/mesh-expansion.yaml" --ignore-not-found="true"
-kubectl delete -f "${ISTIO_DIR}/install/kubernetes/istio-demo.yaml" --ignore-not-found="true"
+kubectl delete -f <("${ISTIO_DIR}/bin/istioctl" kube-inject -f \
+  "${ISTIO_DIR}/install/kubernetes/mesh-expansion.yaml") --ignore-not-found="true"
+
+kubectl delete -f <("${ISTIO_DIR}/bin/istioctl" kube-inject -f \
+  "${ISTIO_DIR}/install/kubernetes/istio-demo.yaml") --ignore-not-found="true"
+
 kubectl delete clusterrolebinding cluster-admin-binding --ignore-not-found="true"
 
 # Wait for Kubernetes resources to be deleted before deleting the cluster
