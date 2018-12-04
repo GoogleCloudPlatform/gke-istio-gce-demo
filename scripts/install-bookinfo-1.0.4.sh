@@ -27,7 +27,7 @@ source "${SHARED_DIR}/verify-functions.sh"
 kubectl apply -f <("${ISTIO_DIR}"/bin/istioctl kube-inject -f \
   "${ISTIO_DIR}"/samples/bookinfo/platform/kube/bookinfo.yaml)
 
-# Label the default namespace with 
+# Label the default namespace with
 kubectl label namespace default istio-injection=enabled
 
 kubectl apply -f "${ISTIO_DIR}"/samples/bookinfo/platform/kube/bookinfo.yaml
