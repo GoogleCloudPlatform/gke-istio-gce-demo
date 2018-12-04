@@ -132,7 +132,7 @@ kubectl config set-context "$(kubectl config current-context)" --namespace=defau
 #   ISTIO_AUTH_POLICY - Whether MUTUAL_TLS authentication is turned on
 # Returns:
 #   None
-"${ROOT}/scripts/install-bookinfo-1.0.4.sh" "${ISTIO_DIR}" "default" \
+"${ISTIO_SHARED_DIR}/scripts/install-bookinfo-1.0.4.sh" "${ISTIO_DIR}" "default" \
   "${ISTIO_SHARED_DIR}" "${ISTIO_AUTH_POLICY}"
 
 # Validate that the BookInfo application has all of the components installed
