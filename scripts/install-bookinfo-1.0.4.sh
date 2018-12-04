@@ -34,6 +34,14 @@ kubectl apply -f "${ISTIO_DIR}"/samples/bookinfo/platform/kube/bookinfo.yaml
 
 kubectl apply -f "${ISTIO_DIR}"/samples/bookinfo/networking/bookinfo-gateway.yaml
 
+if [[ ${ISTIO_AUTH_POLICY} == "MUTUAL_TLS" ]]; then
+  kubectl apply -f "${ISTIO_DIR}"/samples/bookinfo/networking/destination-rule-all-mtls.yaml
+else
+  kubectl apply -f "${ISTIO_DIR}"/samples/bookinfo/networking/destination-rule-all.yaml
+fi
+
+kubectl apply -f "${ISTIO_DIR}"/samples/bookinfo/networking/virtual-service-reviews-v3.yaml
+
 echo "Check that BookInfo services are installed"
 
 for SERVICE_LABEL in "details" "productpage" "ratings" "reviews"; do
