@@ -30,10 +30,6 @@ source "${ISTIO_SHARED_DIR}/verify-functions.sh"
 
 # Delete all created Istio and Kubernetes resources
 if directory_exists "${ISTIO_DIR}"; then
-  "${ISTIO_DIR}/bin/istioctl" delete -f \
-    "${ISTIO_DIR}/samples/bookinfo/networking/destination-rule-all-mtls.yaml"
-  "${ISTIO_DIR}/bin/istioctl" delete -f \
-    "${ISTIO_DIR}/samples/bookinfo/networking/bookinfo-gateway.yaml"
   kubectl delete -f <("${ISTIO_DIR}/bin/istioctl" kube-inject -f \
     "${ISTIO_DIR}/samples/bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml") \
     --ignore-not-found="true"
@@ -42,8 +38,12 @@ if directory_exists "${ISTIO_DIR}"; then
     --ignore-not-found="true"
 fi
 
-kubectl delete -f "${ISTIO_DIR}/install/kubernetes/mesh-expansion.yaml" --ignore-not-found="true"
-kubectl delete -f "${ISTIO_DIR}/install/kubernetes/istio-demo.yaml" --ignore-not-found="true"
+kubectl delete -f <("${ISTIO_DIR}/bin/istioctl" kube-inject -f \
+  "${ISTIO_DIR}/install/kubernetes/mesh-expansion.yaml") --ignore-not-found="true"
+
+kubectl delete -f <("${ISTIO_DIR}/bin/istioctl" kube-inject -f \
+  "${ISTIO_DIR}/install/kubernetes/istio-demo.yaml") --ignore-not-found="true"
+
 kubectl delete clusterrolebinding cluster-admin-binding --ignore-not-found="true"
 
 # Wait for Kubernetes resources to be deleted before deleting the cluster
