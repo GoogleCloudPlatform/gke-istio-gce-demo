@@ -102,8 +102,6 @@ In the diagram, note:
 
 ## Prerequisites
 
-A Google Cloud account and a project with billing enabled are required for this demo to function. If you do not have a Google Cloud account please sign up for a free trial [here](https://cloud.google.com).
-
 ### Supported Operating Systems
 
 This demo can be run from MacOS, Linux, or, alternatively, directly from [Google Cloud Shell](https://cloud.google.com/shell/docs/). The latter option is the simplest as it only requires browser access to GCP and no additional software is required. Instructions for both alternatives can be found below.
