@@ -14,10 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+# Do not set errexit- we want to attempt to teardown everything
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-# properties file
+
 # shellcheck source=properties.env
 source "${ROOT}/properties.env"
 

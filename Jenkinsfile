@@ -69,14 +69,16 @@ spec:
           sh "gcloud config set compute/zone ${env.ZONE}"
           sh "gcloud config set core/project ${env.PROJECT_ID}"
           sh "gcloud config set compute/region ${env.REGION}"
-         }
-    }
-    stage('Lint') {
-        container(containerName) {
+
           sh "sed -e \"s/<YOUR_PROJECT>/${env.PROJECT_ID}/g\" \
             -e \"s/<YOUR_ZONE>/${env.ZONE}/g\" \
             -e \"s/<YOUR_REGION>/${env.REGION}/g\" \
             properties > properties.env"
+         }
+    }
+
+    stage('Lint') {
+        container(containerName) {
           sh "make lint"
       }
     }
