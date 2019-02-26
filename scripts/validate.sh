@@ -31,4 +31,4 @@ source "${ISTIO_SHARED_DIR}/verify-functions.sh"
 dependency_installed "kubectl"
 
 # shellcheck source=gke-istio-shared/verify-db-ratings.sh
-source "${ISTIO_SHARED_DIR}/verify-db-ratings.sh"
+source "${ISTIO_SHARED_DIR}/verify-db-ratings.sh" "$((1 + RANDOM % 5))"
