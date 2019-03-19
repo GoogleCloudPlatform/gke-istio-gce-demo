@@ -67,10 +67,16 @@ spec:
           // Setup gcloud service account access
           sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
           sh "gcloud config set compute/zone ${env.ZONE}"
-          sh "gcloud config set core/project ${env.ISTIO_PROJECT}"
+          sh "gcloud config set core/project ${env.PROJECT_ID}"
           sh "gcloud config set compute/region ${env.REGION}"
+
+          sh "sed -e \"s/<YOUR_PROJECT>/${env.PROJECT_ID}/g\" \
+            -e \"s/<YOUR_ZONE>/${env.ZONE}/g\" \
+            -e \"s/<YOUR_REGION>/${env.REGION}/g\" \
+            properties > properties.env"
          }
     }
+
     stage('Lint') {
         container(containerName) {
           sh "make lint"
