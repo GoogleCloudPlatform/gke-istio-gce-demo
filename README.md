@@ -114,7 +114,13 @@ _NOTE: This section can be skipped if the cloud deployment is being performed wi
 
 Click the button below to open the demo in your Cloud Shell:
 
-[![Open in Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https%3A%2F%2Fgithub.com%2FGoogleCloudPlatform%2Fgke-istio-gce-demo&page=editor&tutorial=README.md)
+[![Open in Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?cloudshell_git_repo=https://github.com/GoogleCloudPlatform/gke-istio-gce-demo.git&amp;cloudshell_image=gcr.io/graphite-cloud-shell-images/terraform:latest&amp;cloudshell_tutorial=README.md)
+
+Use the `--recursive` argument to download dependencies provided via a git submodule.
+
+```shell
+git submodule update --init --recursive
+```
 
 To prepare [gcloud](https://cloud.google.com/sdk/gcloud/) for use in Cloud Shell, execute the following command in the terminal at the bottom of the browser window you just opened:
 
