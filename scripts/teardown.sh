@@ -18,14 +18,14 @@
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
-# shellcheck source=properties.env
+# shellcheck source=properties.env disable=SC1091
 source "${ROOT}/properties.env"
 
 ISTIO_SHARED_DIR="${ROOT}/gke-istio-shared"
 ISTIO_DIR="${ROOT}/istio-${ISTIO_VERSION}"
 
 # functions to check existence of resources
-# shellcheck source=gke-istio-shared/verify-functions.sh
+# shellcheck source=gke-istio-shared/verify-functions.sh disable=SC1091
 source "${ISTIO_SHARED_DIR}/verify-functions.sh"
 
 # Delete all created Istio and Kubernetes resources

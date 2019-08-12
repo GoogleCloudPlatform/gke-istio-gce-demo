@@ -22,14 +22,14 @@ set -e
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
 # Include the user set variables
-# shellcheck source=properties.env
+# shellcheck source=properties.env disable=SC1091
 source "${ROOT}/properties.env"
 
 ISTIO_SHARED_DIR="${ROOT}/gke-istio-shared"
 ISTIO_DIR="${ROOT}/istio-${ISTIO_VERSION}"
 
 # Source utility functions for checking the existence of various resources.
-# shellcheck source=gke-istio-shared/verify-functions.sh
+# shellcheck source=gke-istio-shared/verify-functions.sh disable=SC1091
 source "${ISTIO_SHARED_DIR}/verify-functions.sh"
 
 # Ensure that the directory containing all of the necessary scripts exists
