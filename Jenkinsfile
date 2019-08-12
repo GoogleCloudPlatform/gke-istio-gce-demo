@@ -36,7 +36,7 @@ podTemplate(
         secretName: 'jenkins-deploy-dev-infra'
     )]
 ) {
-    node(POD_LABLE) {
+    node(POD_LABEL) {
         try {
             // Options covers all other job properties or wrapper functions that apply to entire Pipeline.
             properties([disableConcurrentBuilds()])
